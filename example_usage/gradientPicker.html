@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<style>
+		.grad_ex {
+			width: 200px;
+			height: 20px;
+			margin-bottom: 32px;
+		}
+
+		#controlled {
+			width: 400px;
+			height: 400px;
+			position: absolute;
+			left: 400px;
+			top: 0px;
+		}
+
+		.left {
+			position: absolute;
+			width: 200px;
+			height: 200px;
+		}
+
+		.right {
+			width: 200px;
+			height: 200px;
+			position: absolute;
+			left: 200px;
+		}
+
+		.bottom {
+			width: 400px;
+			height: 200px;
+			position: absolute;
+			top: 200px;
+		}
+	</style>
+	<link rel="stylesheet" href="../plugin/jquery.gradientPicker.css" type="text/css" />
+	<link rel="stylesheet" href="../vendor/jqPlugins/colorpicker/css/colorpicker.css" type="text/css" />
+
+	<script src="../vendor/jquery-1.7.js"></script>
+	<script src="../vendor/jqueryUI-custom.js"></script>
+	<script src="../vendor/jqPlugins/colorpicker/js/colorpicker.js"></script>
+	<script src="../plugin/jquery.gradientPicker.js"></script>
+
+	<script>
+		$(function() {
+			// $(".grad_ex").gradientPicker({
+			// 	change: function(points, styles) {
+
+			// 	}
+			// });
+
+
+			var $left = $(".left");
+			var $right = $(".right");
+			var $bottom = $(".bottom");
+			$("#ex1").gradientPicker({
+				change: function(points, styles) {
+					for (i = 0; i < styles.length; ++i) {
+						$left.css("background-image", styles[i]);
+					}
+				},
+				fillDirection: "bottom",
+				controlPoints: ["green 0%", "yellow 50%", "green 100%"]
+			});
+
+			$("#ex2").gradientPicker({
+				change: function(points, styles) {
+					for (i = 0; i < styles.length; ++i) {
+						$right.css("background-image", styles[i]);
+					}
+				},
+				controlPoints: ["green 0%", "orange 100%"]
+			});
+
+			$("#ex3").gradientPicker({
+				type: "radial",
+				change: function(points, styles) {
+					for (i = 0; i < styles.length; ++i) {
+						$bottom.css("background-image", styles[i]);
+					}
+				},
+				controlPoints: ["blue 0%", "yellow 100%"]
+			});
+		});
+	</script>
+</head>
+<body>
+	<div class="grad_ex" id="ex1"></div>
+	<div class="grad_ex" id="ex2"></div>
+	<div class="grad_ex" id="ex3"></div>
+
+	<div id="controlled">
+		<div class="left"></div>
+		<div class="right"></div>
+		<div class="bottom"></div>
+	</div>
+</body>
+</html>
