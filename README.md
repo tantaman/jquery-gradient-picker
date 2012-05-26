@@ -1,10 +1,10 @@
-GradientChooser
+Gradient Picker
 ====
 
 A jQuery plugin to allow you to add gradient choosers to your website.
 
 * The type of gradient (radial, linear) is configurable as well as the fill direction of the gradient.
-* Currently works in Webkit, Mozilla and Opera.  Support for IE may be coming in a future version.
+* Currently works in Webkit, Mozilla and Opera.  **Support for IE may be coming in a future version.**
 * Control points can be added by clicking on the gradient preview
 * Control points may be removed by clicking the "x" on that control point's color configuration
 * The colors of individual control points may be assigned
@@ -26,7 +26,12 @@ Options
 
 Live Demo
 ====
-http://tantaman.github.com/jquery-graident-picker/example_usage/gradientPicker.html
+http://tantaman.github.com/jquery-gradient-picker/example_usage/gradientPicker.html
+
+Dependencies
+====
+* jQueryUI draggable http://jqueryui.com
+* colorpicker http://www.eyecon.ro/colorpicker/
 
 Example Usage
 ====
