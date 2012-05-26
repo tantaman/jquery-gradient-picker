@@ -37,8 +37,8 @@
 		browserPrefix = "-ms-";
 	}
 
-	function GradientSelection(elem, opts) {
-		this.$el = $(elem);
+	function GradientSelection($el, opts) {
+		this.$el = $el;
 		this.$el.css("position", "relative");
 		this.opts = opts;
 
@@ -82,6 +82,11 @@
 
 		destroyed: function() {
 			$(document).unbind("click", this.docClicked);
+		},
+
+		updateOptions: function(opts) {
+			$.extend(this.opts, opts);
+			this.updatePreview();
 		},
 
 		updatePreview: function() {
@@ -285,18 +290,41 @@
 		}
 	};
 
-	$.fn.gradientPicker = function(opts) {
-		opts = $.extend({
-			controlPoints: ["#FFF 0%", "#000 100%"],
-			orientation: "horizontal",
-			type: "linear",
-			fillDirection: "left",
-			generateStyles: true,
-			change: function() {}
-		}, opts);
+	var methods = {
+		init: function(opts) {
+			opts = $.extend({
+				controlPoints: ["#FFF 0%", "#000 100%"],
+				orientation: "horizontal",
+				type: "linear",
+				fillDirection: "left",
+				generateStyles: true,
+				change: function() {}
+			}, opts);
 
-		this.each(function() {
-			new GradientSelection(this, opts);
-		});
+			this.each(function() {
+				var $this = $(this);
+				var gradSel = new GradientSelection($this, opts);
+				$this.data("gradientPicker-sel", gradSel);
+			});
+		},
+
+		update: function(opts) {
+			this.each(function() {
+				var $this = $(this);
+				var gradSel = $this.data("gradientPicker-sel");
+				if (gradSel != null) {
+					gradSel.updateOptions(opts);
+				}
+			});
+		}
+	};
+
+	$.fn.gradientPicker = function(method, opts) {
+		if (typeof method === "string" && method !== "init") {
+			methods[method].call(this, opts);
+		} else {
+			opts = method;
+			methods.init.call(this, opts);
+		}
 	};
 })( jQuery );
