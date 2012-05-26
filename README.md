@@ -1,4 +1,4 @@
-GradientChooser
+Gradient Picker
 ====
 
 A jQuery plugin to allow you to add gradient choosers to your website.
