@@ -28,6 +28,11 @@ Live Demo
 ====
 http://tantaman.github.com/jquery-gradient-picker/example_usage/gradientPicker.html
 
+Dependencies
+====
+* jQueryUI draggable http://jqueryui.com
+* colorpicker http://www.eyecon.ro/colorpicker/
+
 Example Usage
 ====
 
