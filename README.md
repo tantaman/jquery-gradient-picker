@@ -26,7 +26,7 @@ Options
 
 Live Demo
 ====
-http://tantaman.github.com/jquery-graident-picker/example_usage/gradientPicker.html
+http://tantaman.github.com/jquery-gradient-picker/example_usage/gradientPicker.html
 
 Example Usage
 ====
