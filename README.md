@@ -4,24 +4,24 @@ GradientChooser
 A jQuery plugin to allow you to add gradient choosers to your website.
 
 * The type of gradient (radial, linear) is configurable as well as the fill direction of the gradient.
-* Currently works in Webkit, Mozilla and Opera.  Support for IE maybe be coming in a future version.
+* Currently works in Webkit, Mozilla and Opera.  Support for IE may be coming in a future version.
 * Control points can be added by clicking on the gradient preview
-* Control points may be remove by clicking the "x" on that control point's color configuration
+* Control points may be removed by clicking the "x" on that control point's color configuration
 * The colors of individual control points may be assigned
 
 
 Options
 ====
 
-```fillDirection``` default: left.  Can be any CSS3 support direction for linear gradients.  E.g., top, left, bottom, right, 45deg, etc.  
+* ```fillDirection``` default: left.  Can be any CSS3 supported direction for linear gradients.  E.g., top, left, bottom, right, 45deg, etc.  
 
-```type``` default: linear.  linear or radial
+* ```type``` default: linear.  Options: linear or radial
 
-```controlPoints``` color and position pairs used to set the initial state of the gradient picker.  Written in the following form: ```controlPoints: ["green 0%", "orange 100%"]```
+* ```controlPoints``` color and position pairs used to set the initial state of the gradient picker.  Written in the following form: ```controlPoints: ["green 0%", "orange 100%"]```
 
-```change``` the callback to call when the gradient has been updated / changed.  Callbacks receive two parameters: ```points``` and ```styles```.  ```points``` contains the information for each gradient control point.  ```styles``` contains the generate CSS.  The first entry in the styles array is the CSS3 standard style.  The second entry is the browser specific style (-moz,-webkit,-o,etc.)
+* ```change``` the callback to call when the gradient has been updated / changed.  Callbacks receive two parameters: ```points``` and ```styles```.  ```points``` contains the information for each gradient control point.  ```styles``` contains the generate CSS.  The first entry in the styles array is the CSS3 standard style.  The second entry is the browser specific style (-moz,-webkit,-o,etc.)
 
-```generateStyles``` defualt: true.  Option to not generate styles and instead only pass back the ```points``` array.
+* ```generateStyles``` default: true.  Option to not generate styles and instead only pass back the ```points``` array.
 
 
 Live Demo
@@ -31,6 +31,7 @@ http://tantaman.github.com/jquery-graident-picker/example_usage/gradientPicker.h
 Example Usage
 ====
 
+*Ex 1*
 ```javascript
 			$("#ex1").gradientPicker({
 				change: function(points, styles) { // styles include standard style and browser-prefixed style
@@ -41,6 +42,10 @@ Example Usage
 				fillDirection: "bottom",
 				controlPoints: ["green 0%", "yellow 50%", "green 100%"]
 			});
+```
+
+*Ex 2*
+```javascript
 
 			$("#ex2").gradientPicker({
 				// points is an array of point objects containing the color and position of a graident control point.
@@ -51,7 +56,10 @@ Example Usage
 				},
 				controlPoints: ["green 0%", "orange 100%"]
 			});
+```
 
+*Ex 3*
+```javascript
 			$("#ex3").gradientPicker({
 				type: "radial",
 				change: function(points, styles) {
