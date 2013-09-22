@@ -27,15 +27,15 @@
 	}
 
 	var browserPrefix = "";
-	if ($.browser.mozilla) {
-		browserPrefix = "-moz-";
-	} else if ($.browser.webkit) {
-		browserPrefix = "-webkit-";
-	} else if ($.browser.opera) {
-		browserPrefix = "-o-";
-	} else if ($.browser.msie) {
-		browserPrefix = "-ms-";
-	}
+	var agent = window.navigator.userAgent;
+	if (agent.indexOf('WebKit') >= 0)
+		browserPrefix = "-webkit-"
+	else if (agent.indexOf('Mozilla') >= 0)
+		browserPrefix = "-moz-"
+	else if (agent.indexOf('Microsoft') >= 0)
+		browserPrefix = "-ms-"
+	else
+		browserPrefix = ""
 
 	function GradientSelection($el, opts) {
 		this.$el = $el;
@@ -198,6 +198,7 @@
 			stop: this.stop,
 			containment: $parentEl
 		});
+		this.$el.css("position", 'absolute');
 		this.$el.click(this.clicked);
 	}
 
