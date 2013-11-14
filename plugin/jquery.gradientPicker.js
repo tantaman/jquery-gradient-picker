@@ -27,30 +27,34 @@
 	}
 
 	var browserPrefix = "";
-	if ($.browser.mozilla) {
-		browserPrefix = "-moz-";
-	} else if ($.browser.webkit) {
-		browserPrefix = "-webkit-";
-	} else if ($.browser.opera) {
-		browserPrefix = "-o-";
-	} else if ($.browser.msie) {
-		browserPrefix = "-ms-";
-	}
+	var agent = window.navigator.userAgent;
+	if (agent.indexOf('WebKit') >= 0)
+		browserPrefix = "-webkit-"
+	else if (agent.indexOf('Mozilla') >= 0)
+		browserPrefix = "-moz-"
+	else if (agent.indexOf('Microsoft') >= 0)
+		browserPrefix = "-ms-"
+	else
+		browserPrefix = ""
 
-	function GradientSelection($el, opts) {
-		this.$el = $el;
-		this.$el.css("position", "relative");
+	function GradientSelection($parent, opts) {
 		this.opts = opts;
+
+        this.$el = $('<div class="gradientPicker-root gradientPicker-' + opts.orientation + '"></div>');
+        $parent.append(this.$el);
+
+        this.$el.addClass('gradientPicker-root');
+        this.$el.addClass('gradientPicker-' + opts.orientation);
 
 		var $preview = $("<canvas class='gradientPicker-preview'></canvas>");
 		this.$el.append($preview);
-		var canvas = $preview[0];
-		canvas.width = canvas.clientWidth;
-		canvas.height = canvas.clientHeight;
-		this.g2d = canvas.getContext("2d");
+		this.canvas = $preview[0];
+        this.canvas.width = this.canvas.clientWidth;
+        this.canvas.height = this.canvas.clientHeight;
+		this.g2d = this.canvas.getContext("2d");
 
 		var $ctrlPtContainer = $("<div class='gradientPicker-ctrlPts'></div>");
-		this.$el.append($ctrlPtContainer)
+		this.$el.append($ctrlPtContainer);
 		this.$ctrlPtContainer = $ctrlPtContainer;
 
 		this.updatePreview = bind(this.updatePreview, this);
@@ -66,7 +70,9 @@
 		$(document).bind("click", this.docClicked);
 		this.$el.bind("destroyed", this.destroyed);
 		this.previewClicked = bind(this.previewClicked, this);
-		$preview.click(this.previewClicked);
+
+		$preview.click(bind(this.previewClicked, this));
+        $ctrlPtContainer.click(bind(this.previewClicked, this));
 
 		this.updatePreview();
 	}
@@ -90,20 +96,22 @@
 		},
 
 		updatePreview: function() {
-			var result = [];
-			this.controlPoints.sort(ctrlPtComparator);
-			if (this.opts.orientation == "horizontal") {
-				var grad = this.g2d.createLinearGradient(0, 0, this.g2d.canvas.width, 0);
-				for (var i = 0; i < this.controlPoints.length; ++i) {
-					var pt = this.controlPoints[i];
-					grad.addColorStop(pt.position, pt.color);
-					result.push({
-						position: pt.position,
-						color: pt.color
-					});
-				}
-			} else {
+		    var result = [];
 
+			this.controlPoints.sort(ctrlPtComparator);
+            var grad;
+			if (this.opts.orientation == "horizontal") {
+				grad = this.g2d.createLinearGradient(0, 0, this.g2d.canvas.width, 0);
+			} else {
+			    grad = this.g2d.createLinearGradient(0, 0, 0, this.g2d.canvas.height);
+			}
+			for (var i = 0; i < this.controlPoints.length; ++i) {
+			    var pt = this.controlPoints[i];
+			    grad.addColorStop(pt.position, pt.color);
+			    result.push({
+			        position: pt.position,
+			        color: pt.color
+			    });
 			}
 
 			this.g2d.fillStyle = grad;
@@ -129,11 +137,18 @@
 			var x = e.pageX - offset.left;
 			var y = e.pageY - offset.top;
 
-			var imgData = this.g2d.getImageData(x,y,1,1);
+            var imgData;
+            if (this.opts.orientation == 'horizontal') {
+                imgData = this.g2d.getImageData(x,0,1,1);
+            } else {
+                imgData = this.g2d.getImageData(0,y,1,1);
+            }
 			var colorStr = "rgb(" + imgData.data[0] + "," + imgData.data[1] + "," + imgData.data[2] + ")";
 
 			var cp = this.createCtrlPt({
-				position: x / this.g2d.canvas.width,
+				position: this.opts.orientation == 'horizontal'
+                    ? (x / this.g2d.canvas.width)
+                    : (y / this.g2d.canvas.height),
 				color: colorStr
 			});
 
@@ -166,6 +181,7 @@
 		$parentEl.append(this.$el);
 		this.$parentEl = $parentEl;
 		this.configView = ctrlPtConfig;
+		this.orientation = orientation;
 
 		if (typeof initialState === "string") {
 			initialState = initialState.split(" ");
@@ -178,6 +194,7 @@
 
 		this.listener = listener;
 		this.outerWidth = this.$el.outerWidth();
+		this.outerHeight = this.$el.outerHeight();
 
 		this.$el.css("background-color", this.color);
 		if (orientation == "horizontal") {
@@ -198,14 +215,21 @@
 			stop: this.stop,
 			containment: $parentEl
 		});
+		this.$el.css("position", 'absolute');
 		this.$el.click(this.clicked);
 	}
 
 	ControlPoint.prototype = {
 		drag: function(e, ui) {
-			// convert position to a %
-			var left = ui.position.left;
-			this.position = (left / (this.$parentEl.width() - this.outerWidth));
+		    // convert position to a %
+		    if (this.orientation == 'horizontal') {
+		        var left = ui.position.left;
+		        this.position = (left / (this.$parentEl.width() - this.outerWidth));
+		    } else {
+		        var top = ui.position.top;
+		        this.position = (top / (this.$parentEl.height() - this.outerHeight));
+		    }
+            console.log(this.position);
 			this.listener.updatePreview();
 		},
 
@@ -215,7 +239,12 @@
 		},
 
 		clicked: function(e) {
-			this.configView.show(this.$el.position(), this.color, this);
+            if (this == this.configView.getListener() && this.configView.visible) {
+                // second click
+                this.configView.hide();
+            } else {
+			    this.configView.show(this.$el.position(), this.color, this);
+            }
 			e.stopPropagation();
 			return false;
 		},
@@ -236,17 +265,17 @@
 		//color-chooser
 		this.$el = $('<div class="gradientPicker-ptConfig" style="visibility: hidden"></div>');
 		$parent.append(this.$el);
-		var $cpicker = $('<div class="color-chooser"></div>');
-		this.$el.append($cpicker);
+		var $colorPicker = $('<div class="color-chooser"></div>');
+		this.$el.append($colorPicker);
 		var $rmEl = $("<div class='gradientPicker-close'></div>");
 		this.$el.append($rmEl);
 
 		this.colorChanged = bind(this.colorChanged, this);
 		this.removeClicked = bind(this.removeClicked, this);
-		$cpicker.ColorPicker({
+		$colorPicker.ColorPicker({
 			onChange: this.colorChanged
 		});
-		this.$cpicker = $cpicker;
+		this.$cpicker = $colorPicker;
 		this.opts = opts;
 		this.visible = false;
 
@@ -277,6 +306,10 @@
 				this.visible = false;
 			}
 		},
+
+        getListener: function() {
+            return this.listener;
+        },
 
 		colorChanged: function(hsb, hex, rgb) {
 			hex = "#" + hex;
