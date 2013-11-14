@@ -60,12 +60,16 @@
 			// 	}
 			// });
 
-
+            var $body = $("body");
 			var $left = $(".left");
 			var $right = $(".right");
 			var $bottom = $(".bottom");
+
 			$("#ex1").gradientPicker({
-				change: function(points, styles) {
+				change: function(stops, styles) {
+                    console.log('gradient changed:', stops, styles);
+                    $body.css({background: styles[1]});
+
 					for (i = 0; i < styles.length; ++i) {
 						$left.css("background-image", styles[i]);
 					}
@@ -76,7 +80,7 @@
 			});
 
 			$("#ex2").gradientPicker({
-				change: function(points, styles) {
+				change: function(stops, styles) {
 					for (i = 0; i < styles.length; ++i) {
 						$right.css("background-image", styles[i]);
 					}
@@ -87,7 +91,7 @@
 
 			$("#ex3").gradientPicker({
 				type: "radial",
-				change: function(points, styles) {
+				change: function(stops, styles) {
 					for (i = 0; i < styles.length; ++i) {
 						$bottom.css("background-image", styles[i]);
 					}

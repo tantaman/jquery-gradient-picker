@@ -29,13 +29,13 @@
 	var browserPrefix = "";
 	var agent = window.navigator.userAgent;
 	if (agent.indexOf('WebKit') >= 0)
-		browserPrefix = "-webkit-"
+		browserPrefix = '-webkit-';
 	else if (agent.indexOf('Mozilla') >= 0)
-		browserPrefix = "-moz-"
+		browserPrefix = '-moz-';
 	else if (agent.indexOf('Microsoft') >= 0)
-		browserPrefix = "-ms-"
+		browserPrefix = '-ms-';
 	else
-		browserPrefix = ""
+		browserPrefix = '';
 
 	function GradientSelection($parent, opts) {
 		this.opts = opts;
@@ -120,7 +120,7 @@
 			if (this.opts.generateStyles)
 				var styles = this._generatePreviewStyles();
 
-			this.opts.change(result, styles);
+            (typeof this.opts.change == 'function') && this.opts.change(result, styles);
 		},
 
 		removeControlPoint: function(ctrlPt) {
@@ -197,7 +197,10 @@
 		this.outerHeight = this.$el.outerHeight();
 
 		this.$el.css("background-color", this.color);
-		if (orientation == "horizontal") {
+        // then convert back to get rgb from green
+        this.color = this.$el.css('backgroundColor');
+
+        if (orientation == "horizontal") {
 			var pxLeft = ($parentEl.width() - this.$el.outerWidth()) * (this.position);
 			this.$el.css("left", pxLeft);
 		} else {
@@ -229,7 +232,6 @@
 		        var top = ui.position.top;
 		        this.position = (top / (this.$parentEl.height() - this.outerHeight));
 		    }
-            console.log(this.position);
 			this.listener.updatePreview();
 		},
 
@@ -325,6 +327,10 @@
 
 	var methods = {
 		init: function(opts) {
+            if (opts.orientation && opts.orientation == 'vertical' && !opts.fillDirection) {
+                opts.fillDirection = "top";
+            }
+
 			opts = $.extend({
 				controlPoints: ["#FFF 0%", "#000 100%"],
 				orientation: "horizontal",
