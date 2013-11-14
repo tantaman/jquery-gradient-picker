@@ -4,7 +4,15 @@
 	<style>
 		.grad_ex {
 			width: 200px;
-			height: 20px;
+			height: 200px;
+			margin-bottom: 32px;
+		}
+		.grad_ex.horizontal {
+			height: 32px;
+			margin-bottom: 32px;
+		}
+		.grad_ex.vertical {
+			width: 32px;
 			margin-bottom: 32px;
 		}
 
@@ -62,7 +70,8 @@
 						$left.css("background-image", styles[i]);
 					}
 				},
-				fillDirection: "45deg",
+				// fillDirection: "90deg",
+				orientation: 'vertical',
 				controlPoints: ["green 0%", "yellow 50%", "green 100%"]
 			});
 
@@ -72,6 +81,7 @@
 						$right.css("background-image", styles[i]);
 					}
 				},
+				fillDirection: "45deg",
 				controlPoints: ["green 0%", "orange 100%"]
 			});
 
@@ -88,8 +98,8 @@
 	</script>
 </head>
 <body>
-	<div class="grad_ex" id="ex1"></div>
-	<div class="grad_ex" id="ex2"></div>
+	<div class="grad_ex vertical" id="ex1"></div>
+	<div class="grad_ex horizontal" id="ex2"></div>
 	<div class="grad_ex" id="ex3"></div>
 
 	<div id="controlled">
