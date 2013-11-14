@@ -154,6 +154,9 @@
 
 			this.controlPoints.push(cp);
 			this.controlPoints.sort(ctrlPtComparator);
+
+            cp.showConfigView();
+            e.stopPropagation();
 		},
 
 		_generatePreviewStyles: function() {
@@ -167,7 +170,7 @@
 				} else {
 					first = false;
 				}
-				str += pt.color + " " + ((pt.position*100)|0) + "%";
+				str += tinycolor(pt.color).toHexString() + " " + ((pt.position*100)|0) + "%";
 			}
 
 			str = str + ")"
@@ -198,7 +201,7 @@
 
 		this.$el.css("background-color", this.color);
         // then convert back to get rgb from green
-        this.color = this.$el.css('backgroundColor');
+        this.color = tinycolor(this.$el.css('backgroundColor')).toHexString();
 
         if (orientation == "horizontal") {
 			var pxLeft = ($parentEl.width() - this.$el.outerWidth()) * (this.position);
@@ -243,13 +246,21 @@
 		clicked: function(e) {
             if (this == this.configView.getListener() && this.configView.visible) {
                 // second click
-                this.configView.hide();
+                this.hideConfigView();
             } else {
-			    this.configView.show(this.$el.position(), this.color, this);
+                this.showConfigView();
             }
 			e.stopPropagation();
 			return false;
 		},
+
+        showConfigView: function() {
+            this.configView.show(this.$el.position(), this.color, this);
+        },
+
+        hideConfigView: function() {
+            this.configView.hide();
+        },
 
 		colorChanged: function(c) {
 			this.color = c;
@@ -275,7 +286,15 @@
 		this.colorChanged = bind(this.colorChanged, this);
 		this.removeClicked = bind(this.removeClicked, this);
 		$colorPicker.ColorPicker({
-			onChange: this.colorChanged
+			onChange: this.colorChanged,
+            onShow: function (colpkr) {
+                $(colpkr).show();
+                return false;
+            },
+            onHide: function (colpkr) {
+                $(colpkr).hide();
+                return false;
+            }
 		});
 		this.$cpicker = $colorPicker;
 		this.opts = opts;
@@ -296,10 +315,6 @@
 			} else {
 				this.$el.css("top", position.top);
 			}
-			//else {
-			//	this.visible = false;
-				//this.$el.css("visibility", "hidden");
-			//}
 		},
 
 		hide: function() {

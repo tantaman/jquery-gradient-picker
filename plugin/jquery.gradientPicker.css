@@ -67,15 +67,14 @@
 
 .gradientPicker-ptConfig {
 	position: absolute;
-	/*width: 35px;*/
-	/*height: 40px;*/
 	z-index: 1;
 
-	/*background-color: white;*/
-	/*border-radius: 5px;*/
-	/*border: 1px solid rgba(0,0,0,0.2);*/
-	/*padding: 0 3px;*/
-	-webkit-box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+    position: relative;
+    width: 30px;
+    height: 30px;
+    background: url('select.png');
+
+    -webkit-box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
 	-moz-box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
 	box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
 }
@@ -88,7 +87,12 @@
 	margin-left: 16px;
 }
 .gradientPicker-ptConfig .color-chooser {
-    margin-top: 0;
+    position: absolute;
+    top: 3px;
+    left: 3px;
+    right: 3px;
+    bottom: 3px;
+    background: url('select.png') center;
 }
 
 .gradientPicker-close {
@@ -98,8 +102,4 @@
 	width: 16px;
 	height: 16px;
 	background-image: url("circle_remove.png");
-}
-
-.gradientPicker-ptConfig .color-chooser {
-	float: left;
 }
