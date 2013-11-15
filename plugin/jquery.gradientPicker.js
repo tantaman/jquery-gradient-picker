@@ -86,6 +86,10 @@
 			$(document).unbind("click", this.docClicked);
 		},
 
+        delete: function() {
+            this.$el.remove();
+        },
+
 		updateOptions: function(opts) {
 			$.extend(this.opts, opts);
             this.regenerateControlPoints();
@@ -380,6 +384,16 @@
 				var gradSel = $this.data("gradientPicker-sel");
 				if (gradSel != null) {
 					gradSel.updateOptions(opts);
+				}
+			});
+		},
+
+		delete: function() {
+			this.each(function() {
+				var $this = $(this);
+				var gradSel = $this.data("gradientPicker-sel");
+				if (gradSel != null) {
+					gradSel.delete();
 				}
 			});
 		}
