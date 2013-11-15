@@ -58,12 +58,8 @@
 		this.$ctrlPtContainer = $ctrlPtContainer;
 
 		this.updatePreview = bind(this.updatePreview, this);
-		this.controlPoints = [];
-		this.ctrlPtConfig = new ControlPtConfig(this.$el, opts);
-		for (var i = 0; i < opts.controlPoints.length; ++i) {
-			var ctrlPt = this.createCtrlPt(opts.controlPoints[i]);
-			this.controlPoints.push(ctrlPt);
-		}
+
+        this.regenerateControlPoints();
 
 		this.docClicked = bind(this.docClicked, this);
 		this.destroyed = bind(this.destroyed, this);
@@ -92,6 +88,7 @@
 
 		updateOptions: function(opts) {
 			$.extend(this.opts, opts);
+            this.regenerateControlPoints();
 			this.updatePreview();
 		},
 
@@ -122,6 +119,20 @@
 
             (typeof this.opts.change == 'function') && this.opts.change(result, styles);
 		},
+
+        regenerateControlPoints: function() {
+            if (this.controlPoints) {
+                for (var i = 0; i < this.controlPoints.length; ++i) {
+                    this.removeControlPoint(this.controlPoints[i]);
+                }
+            }
+            this.controlPoints = [];
+            this.ctrlPtConfig = new ControlPtConfig(this.$el, this.opts);
+            for (var i = 0; i < this.opts.controlPoints.length; ++i) {
+                var ctrlPt = this.createCtrlPt(this.opts.controlPoints[i]);
+                this.controlPoints.push(ctrlPt);
+            }
+        },
 
 		removeControlPoint: function(ctrlPt) {
 			var cpidx = this.controlPoints.indexOf(ctrlPt);
@@ -252,7 +263,7 @@
                 this.showConfigView();
             }
             e.stopPropagation();
-            return false;
+            e.preventDefault();
         },
 
         showConfigView: function() {
