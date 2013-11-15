@@ -48,21 +48,45 @@
     box-shadow: inset 0 1px 0 rgba(255,255,255,0.4), 0 2px 1px rgba(0,0,0,0.6);
 */
 }
+.gradientPicker-horizontal .gradientPicker-ctrlPt,
+.gradientPicker-horizontal .gradientPicker-ptConfig
+{
+    -webkit-transform: translate(0, -8px);
+}
+.gradientPicker-vertical .gradientPicker-ctrlPt,
+.gradientPicker-vertical .gradientPicker-ptConfig
+{
+    -webkit-transform: translate(-8px, 0);
+}
 
 .gradientPicker-ctrlPts {
 	position: relative;
-    background: rgba(0,0,0,0.1);
+    /*background: rgba(0,0,0,0.1);*/
 }
 .gradientPicker-horizontal .gradientPicker-ctrlPts {
 	height: 16px; /* must be same height as .gradientPicker-ctrlPt */
 	width: 100%;
-}
+
+    background: -moz-linear-gradient(top,  rgba(0,0,0,0.33) 0%, rgba(0,0,0,0) 100%);
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(0,0,0,0.33)), color-stop(100%,rgba(0,0,0,0)));
+    background: -webkit-linear-gradient(top,  rgba(0,0,0,0.33) 0%,rgba(0,0,0,0) 100%);
+    background: -o-linear-gradient(top,  rgba(0,0,0,0.33) 0%,rgba(0,0,0,0) 100%);
+    background: -ms-linear-gradient(top,  rgba(0,0,0,0.33) 0%,rgba(0,0,0,0) 100%);
+    background: linear-gradient(to bottom,  rgba(0,0,0,0.33) 0%,rgba(0,0,0,0) 100%);
+ }
 .gradientPicker-vertical .gradientPicker-ctrlPts {
     position: absolute;
     top: 0;
     left: 0;
     height: 100%;
 	width: 16px; /* must be same width as .gradientPicker-ctrlPt */
+
+    background: -moz-linear-gradient(left,  rgba(0,0,0,0.33) 0%, rgba(0,0,0,0.33) 1%, rgba(0,0,0,0) 100%);
+    background: -webkit-gradient(linear, left top, right top, color-stop(0%,rgba(0,0,0,0.33)), color-stop(1%,rgba(0,0,0,0.33)), color-stop(100%,rgba(0,0,0,0)));
+    background: -webkit-linear-gradient(left,  rgba(0,0,0,0.33) 0%,rgba(0,0,0,0.33) 1%,rgba(0,0,0,0) 100%);
+    background: -o-linear-gradient(left,  rgba(0,0,0,0.33) 0%,rgba(0,0,0,0.33) 1%,rgba(0,0,0,0) 100%);
+    background: -ms-linear-gradient(left,  rgba(0,0,0,0.33) 0%,rgba(0,0,0,0.33) 1%,rgba(0,0,0,0) 100%);
+    background: linear-gradient(to right,  rgba(0,0,0,0.33) 0%,rgba(0,0,0,0.33) 1%,rgba(0,0,0,0) 100%);
 }
 
 .gradientPicker-ptConfig {
