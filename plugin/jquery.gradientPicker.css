@@ -41,12 +41,11 @@
 	display: inline-block;
 
     border-radius: 3px;
-    box-shadow: inset 0 0px 0px 1px rgba(0,0,0,0.4);
+    /*box-shadow: inset 0 0px 0px 1px rgba(0,0,0,0.4);*/
 
-/*
-    border-radius: 2px;
-    box-shadow: inset 0 1px 0 rgba(255,255,255,0.4), 0 2px 1px rgba(0,0,0,0.6);
-*/
+    box-shadow: inset 0 1px 0px 0px rgba(255,255,255,0.9);
+    border: 1px solid rgba(0,0,0,0.5);
+    box-sizing: border-box;
 }
 .gradientPicker-horizontal .gradientPicker-ctrlPt,
 .gradientPicker-horizontal .gradientPicker-ptConfig
@@ -67,12 +66,14 @@
 	height: 16px; /* must be same height as .gradientPicker-ctrlPt */
 	width: 100%;
 
+/*
     background: -moz-linear-gradient(top,  rgba(0,0,0,0.33) 0%, rgba(0,0,0,0) 100%);
     background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(0,0,0,0.33)), color-stop(100%,rgba(0,0,0,0)));
     background: -webkit-linear-gradient(top,  rgba(0,0,0,0.33) 0%,rgba(0,0,0,0) 100%);
     background: -o-linear-gradient(top,  rgba(0,0,0,0.33) 0%,rgba(0,0,0,0) 100%);
     background: -ms-linear-gradient(top,  rgba(0,0,0,0.33) 0%,rgba(0,0,0,0) 100%);
     background: linear-gradient(to bottom,  rgba(0,0,0,0.33) 0%,rgba(0,0,0,0) 100%);
+*/
  }
 .gradientPicker-vertical .gradientPicker-ctrlPts {
     position: absolute;
@@ -81,12 +82,14 @@
     height: 100%;
 	width: 16px; /* must be same width as .gradientPicker-ctrlPt */
 
+/*
     background: -moz-linear-gradient(left,  rgba(0,0,0,0.33) 0%, rgba(0,0,0,0.33) 1%, rgba(0,0,0,0) 100%);
     background: -webkit-gradient(linear, left top, right top, color-stop(0%,rgba(0,0,0,0.33)), color-stop(1%,rgba(0,0,0,0.33)), color-stop(100%,rgba(0,0,0,0)));
     background: -webkit-linear-gradient(left,  rgba(0,0,0,0.33) 0%,rgba(0,0,0,0.33) 1%,rgba(0,0,0,0) 100%);
     background: -o-linear-gradient(left,  rgba(0,0,0,0.33) 0%,rgba(0,0,0,0.33) 1%,rgba(0,0,0,0) 100%);
     background: -ms-linear-gradient(left,  rgba(0,0,0,0.33) 0%,rgba(0,0,0,0.33) 1%,rgba(0,0,0,0) 100%);
     background: linear-gradient(to right,  rgba(0,0,0,0.33) 0%,rgba(0,0,0,0.33) 1%,rgba(0,0,0,0) 100%);
+*/
 }
 
 .gradientPicker-ptConfig {
@@ -126,4 +129,8 @@
 	width: 16px;
 	height: 16px;
 	background-image: url("circle_remove.png");
+}
+
+.gradientPicker-close:hover {
+	background-image: url("circle_remove_hover.png");
 }
