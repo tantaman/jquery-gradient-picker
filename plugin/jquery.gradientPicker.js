@@ -189,10 +189,11 @@
 		if (typeof initialState === "string") {
 			initialState = initialState.split(" ");
 			this.position = parseFloat(initialState[1])/100;
-			this.color = initialState[0];
+			this.color = tinycolor(initialState[0]).toHexString();
 		} else {
 			this.position = initialState.position;
-			this.color = initialState.color;
+            // rgb object -> hex (we can't assign rgb object as background color)
+			this.color = tinycolor(initialState.color).toHexString();
 		}
 
 		this.listener = listener;
@@ -238,21 +239,21 @@
 			this.listener.updatePreview();
 		},
 
-		stop: function(e, ui) {
-			this.listener.updatePreview();
-			this.configView.show(this.$el.position(), this.color, this);
-		},
+        stop: function(e, ui) {
+            this.listener.updatePreview();
+            this.configView.show(this.$el.position(), this.color, this);
+        },
 
-		clicked: function(e) {
+        clicked: function(e) {
             if (this == this.configView.getListener() && this.configView.visible) {
                 // second click
                 this.hideConfigView();
             } else {
                 this.showConfigView();
             }
-			e.stopPropagation();
-			return false;
-		},
+            e.stopPropagation();
+            return false;
+        },
 
         showConfigView: function() {
             this.configView.show(this.$el.position(), this.color, this);
