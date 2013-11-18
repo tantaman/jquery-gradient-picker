@@ -26,12 +26,13 @@ Options
 
 Live Demo
 ====
-http://tantaman.github.com/jquery-gradient-picker/example_usage/gradientPicker.html
+http://tkafka.github.com/jquery-gradient-picker/example_usage/gradientPicker.html
 
 Dependencies
 ====
 * jQueryUI draggable http://jqueryui.com
 * colorpicker http://www.eyecon.ro/colorpicker/
+* tinycolor http://bgrins.github.io/TinyColor/
 
 Example Usage
 ====

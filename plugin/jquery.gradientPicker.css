@@ -1,57 +1,144 @@
+.gradientPicker-root {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+.gradientPicker-root canvas {
+    position: absolute;
+}
+.gradientPicker-root.gradientPicker-horizontal canvas {
+    /*margin-bottom: 14px;*/
+    /*
+    top: 0;
+    bottom: 14px;
+    left: 0;
+    right: 0;
+    */
+}
+.gradientPicker-root.gradientPicker-vertical canvas {
+    /*margin-left: 14px;*/
+    /*
+    top: 0;
+    bottom: 0;
+    left: 14px;
+    right: 0;
+    */
+}
+
 .gradientPicker-preview {
 	width: 100%;
 	height: 100%;
-	border: 1px solid rgba(0,0,0,0.2);
+	/*border: 1px solid rgba(0,0,0,0.2);*/
 	/*box-sizing: border-box;
 	-moz-box-sizing: border-box;*/
 }
 
 .gradientPicker-ctrlPt {
-	width: 8px;
-	height: 8px;
-	border: 2px solid gray;
+	width: 16px;
+	height: 16px;
 	position: absolute;
 	display: inline-block;
+
+    border-radius: 3px;
+    /*box-shadow: inset 0 0px 0px 1px rgba(0,0,0,0.4);*/
+
+    box-shadow: inset 0 1px 0px 0px rgba(255,255,255,0.9);
+    border: 1px solid rgba(0,0,0,0.5);
+    box-sizing: border-box;
+}
+
+.gradientPicker-ctrlPt:hover,
+.gradientPicker-ctrlPt:active
+{
+    box-shadow: inset 0 1px 0px 0px rgba(255,255,255,0.9), 0 0 0 4px rgba(255,255,255,0.8);
+    border: 1px solid rgba(0,0,0,1);
+}
+
+.gradientPicker-horizontal .gradientPicker-ctrlPt,
+.gradientPicker-horizontal .gradientPicker-ptConfig
+{
+    -webkit-transform: translate(0, -8px);
+}
+.gradientPicker-vertical .gradientPicker-ctrlPt,
+.gradientPicker-vertical .gradientPicker-ptConfig
+{
+    -webkit-transform: translate(-8px, 0);
 }
 
 .gradientPicker-ctrlPts {
 	position: relative;
-	height: 10px;
+    /*background: rgba(0,0,0,0.1);*/
+}
+.gradientPicker-horizontal .gradientPicker-ctrlPts {
+	height: 16px; /* must be same height as .gradientPicker-ctrlPt */
 	width: 100%;
+
+/*
+    background: -moz-linear-gradient(top,  rgba(0,0,0,0.33) 0%, rgba(0,0,0,0) 100%);
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(0,0,0,0.33)), color-stop(100%,rgba(0,0,0,0)));
+    background: -webkit-linear-gradient(top,  rgba(0,0,0,0.33) 0%,rgba(0,0,0,0) 100%);
+    background: -o-linear-gradient(top,  rgba(0,0,0,0.33) 0%,rgba(0,0,0,0) 100%);
+    background: -ms-linear-gradient(top,  rgba(0,0,0,0.33) 0%,rgba(0,0,0,0) 100%);
+    background: linear-gradient(to bottom,  rgba(0,0,0,0.33) 0%,rgba(0,0,0,0) 100%);
+*/
+ }
+.gradientPicker-vertical .gradientPicker-ctrlPts {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+	width: 16px; /* must be same width as .gradientPicker-ctrlPt */
+
+/*
+    background: -moz-linear-gradient(left,  rgba(0,0,0,0.33) 0%, rgba(0,0,0,0.33) 1%, rgba(0,0,0,0) 100%);
+    background: -webkit-gradient(linear, left top, right top, color-stop(0%,rgba(0,0,0,0.33)), color-stop(1%,rgba(0,0,0,0.33)), color-stop(100%,rgba(0,0,0,0)));
+    background: -webkit-linear-gradient(left,  rgba(0,0,0,0.33) 0%,rgba(0,0,0,0.33) 1%,rgba(0,0,0,0) 100%);
+    background: -o-linear-gradient(left,  rgba(0,0,0,0.33) 0%,rgba(0,0,0,0.33) 1%,rgba(0,0,0,0) 100%);
+    background: -ms-linear-gradient(left,  rgba(0,0,0,0.33) 0%,rgba(0,0,0,0.33) 1%,rgba(0,0,0,0) 100%);
+    background: linear-gradient(to right,  rgba(0,0,0,0.33) 0%,rgba(0,0,0,0.33) 1%,rgba(0,0,0,0) 100%);
+*/
 }
 
 .gradientPicker-ptConfig {
 	position: absolute;
-	width: 35px;
-	height: 40px;
 	z-index: 1;
-	margin-top: 2px;
 
-	background-color: white;
-	border-radius: 5px;
-	border: 1px solid rgba(0,0,0,0.2);
-	padding: 0 3px;
-	-webkit-box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+    position: relative;
+    width: 30px;
+    height: 30px;
+    background: url('select.png');
+
+    -webkit-box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
 	-moz-box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
 	box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+}
+.gradientPicker-horizontal .gradientPicker-ptConfig {
+	/*margin-top: 16px;*/
+	margin-left: 0;
+}
+.gradientPicker-vertical .gradientPicker-ptConfig {
+	margin-top: 0;
+	margin-left: 16px;
+}
+.gradientPicker-ptConfig .color-chooser {
+    position: absolute;
+    top: 3px;
+    left: 3px;
+    right: 3px;
+    bottom: 3px;
+    background: url('select.png') center;
 }
 
 .gradientPicker-close {
 	position: absolute;
-	top: -4px;
-	right: -4px;
-	/*font-size: 18px;
-	font-weight: bold;
-	color: black;
-	line-height: 20px;
-	text-shadow: 0 1px 0 white;
-	opacity: 0.2;
-	filter: alpha(opacity=20);*/
+	top: -7px;
+	right: -7px;
 	width: 16px;
 	height: 16px;
 	background-image: url("circle_remove.png");
 }
 
-.gradientPicker-ptConfig .color-chooser {
-	float: left;
+.gradientPicker-close:hover {
+	background-image: url("circle_remove_hover.png");
 }
